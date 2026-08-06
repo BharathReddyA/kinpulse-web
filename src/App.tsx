@@ -85,7 +85,7 @@ function App() {
     }
     const path = window.location.pathname.replace(/\/$/, '') || '/'
     const page = pages[path] || pages['/']
-    const canonicalUrl = `https://kithline.com${path === '/' ? '/' : path}`
+    const canonicalUrl = `https://www.kithline.com${path === '/' ? '/' : path}`
     document.title = page.title
     document.querySelector('meta[name="description"]')?.setAttribute('content', page.description)
     document.querySelector('link[rel="canonical"]')?.setAttribute('href', canonicalUrl)
