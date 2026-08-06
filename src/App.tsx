@@ -15,6 +15,51 @@ const Icon = ({ name }: { name: 'sun' | 'moon' | 'menu' | 'close' | 'arrow' | 'c
   return <svg aria-hidden="true" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round">{paths[name]}</svg>
 }
 
+const legalContent = {
+  privacy: {
+    label: 'PRIVACY POLICY', title: 'Your family’s information deserves plain language.', updated: 'Effective August 5, 2026',
+    intro: 'This Privacy Policy explains how the Kinpulse concept website (the “Site,” “we,” “us,” or “our”) handles information. Kinpulse is an early-stage concept and founding pilot, not a medical, emergency, or healthcare-provider service.',
+    sections: [
+      ['Information you provide', 'When you apply for the founding pilot, we collect the information you enter: your name, email address, optional phone number, relationship to the parent, the parent’s general city or region, general living situation, and your description of what you hope the product may help with. Please do not submit medical records, diagnoses, medication lists, precise addresses, emergency information, government identifiers, financial information, or other sensitive records through this form.'],
+      ['Information collected automatically', 'The Site stores your light or dark theme preference in your browser’s local storage. Our hosting and form-delivery providers may process ordinary technical information such as IP address, browser type, device type, referring page, timestamps, and security logs when you access the Site or submit a form. The Site does not currently use advertising cookies or behavioral advertising.'],
+      ['How we use information', 'We use information to review pilot interest, contact applicants, understand broad household needs, operate and secure the Site, prevent abuse, respond to questions, and comply with applicable law. Applying does not guarantee selection or create a customer, medical, or caregiving relationship.'],
+      ['How information is shared', 'Pilot forms are processed by FormSubmit, a third-party form delivery service, so the submission can be delivered to our email inbox. The Site may be hosted by Vercel, and web fonts may be delivered by Google Fonts. These providers process information under their own terms and privacy practices. We may also disclose information when legally required, to protect rights and safety, or as part of a business transaction subject to appropriate safeguards. We do not sell pilot application information.'],
+      ['Retention', 'We retain pilot applications only as long as reasonably necessary to evaluate and communicate about the pilot, maintain appropriate records, resolve disputes, and meet legal obligations. FormSubmit states that submissions may be retained in its archive for 30 days. You may ask us to delete your application, subject to limited legal or security retention requirements.'],
+      ['Health and voice information', 'The current Site does not operate a Kinpulse device and does not collect check-in audio, transcripts, medication responses, mood signals, or device telemetry. Any future product that processes this information will require additional, product-specific notices, consent flows, retention controls, vendor review, and security documentation before launch.'],
+      ['Security', 'We use reasonable administrative and technical measures appropriate to this early-stage Site. No internet transmission or storage system is completely secure, and we cannot guarantee absolute security. Email is not an appropriate channel for urgent or highly sensitive information.'],
+      ['Your choices and rights', 'You may ask to access, correct, or delete the information you submitted, or withdraw from pilot communications, by contacting us. Depending on where you live, applicable privacy law may provide additional rights. We will verify requests when reasonably necessary.'],
+      ['Children', 'The Site and pilot application are intended for adults. We do not knowingly collect personal information from children under 13. Applicants must be at least 18 years old.'],
+      ['International visitors', 'The Site is operated for an initial United States pilot. If you access it from another country, your information may be processed in the United States or other places where our service providers operate.'],
+      ['Changes to this policy', 'We may update this policy as the pilot and product evolve. The effective date above will be revised when material changes are published. If a change materially affects existing applicants, we will provide additional notice when reasonably practicable.'],
+      ['Contact', 'For privacy questions or requests, email bharath.alluri@outlook.com. Before commercial launch, this policy should be updated with the final company name, business address, product data flows, subprocessors, retention schedule, and jurisdiction-specific disclosures.'],
+    ],
+  },
+  terms: {
+    label: 'TERMS OF USE', title: 'A concept should make careful promises.', updated: 'Effective August 5, 2026',
+    intro: 'These Terms of Use govern access to the Kinpulse concept website and founding-pilot application. By using the Site or submitting an application, you agree to these Terms. If you do not agree, do not use the Site.',
+    sections: [
+      ['Concept-stage service', 'Kinpulse is currently a product concept in development. Images, interfaces, features, pricing, timelines, technical descriptions, and pilot plans are illustrative and may change or may never become commercially available. Nothing on the Site is an offer to sell a finished product.'],
+      ['Eligibility', 'You must be at least 18 years old and legally able to agree to these Terms. If you submit information about another adult, you represent that you have a lawful and appropriate reason to do so and will not provide sensitive information without their knowledge or authorization.'],
+      ['Pilot applications', 'A pilot application is an expression of interest only. It does not guarantee selection, availability, compensation, free hardware, or future service. If selected, participation will be governed by a separate pilot agreement and consent materials.'],
+      ['Not medical or emergency care', 'The Site and proposed product are not medical advice, diagnosis, treatment, medication verification, emergency monitoring, fall detection, or a substitute for professional care or human contact. Do not use the Site to report an emergency. In the United States, call 911 or the appropriate local emergency service when immediate help may be needed.'],
+      ['Acceptable use', 'You may not misuse the Site, interfere with its operation, attempt unauthorized access, submit unlawful or deceptive information, impersonate another person, introduce malicious code, scrape the Site at unreasonable volume, or use the Site in a way that violates another person’s privacy or rights.'],
+      ['Your submissions', 'You retain ownership of information and feedback you submit. You grant us permission to use application information to administer and evaluate the pilot and to use non-confidential feedback to improve the concept. Do not submit material you lack the right to provide.'],
+      ['Intellectual property', 'The Site’s design, copy, artwork, product concepts, marks, and software are owned by or licensed to us and are protected by applicable law. You may view the Site for personal, non-commercial evaluation. No other license is granted.'],
+      ['Third-party services and links', 'The Site relies on third-party services, including hosting, fonts, and form delivery. We do not control their availability, security, or separate terms. Links to third-party sites are provided for convenience and do not imply endorsement.'],
+      ['No warranties', 'To the fullest extent permitted by law, the Site is provided “as is” and “as available.” We disclaim implied warranties, including merchantability, fitness for a particular purpose, title, and non-infringement. We do not warrant that the Site will be uninterrupted, error-free, secure, or suitable for any caregiving decision. Some jurisdictions do not permit certain disclaimers, so portions of this section may not apply to you.'],
+      ['Limitation of liability', 'To the fullest extent permitted by law, we will not be liable for indirect, incidental, special, consequential, exemplary, or punitive damages, or for loss of data, opportunity, goodwill, or profits arising from the Site. Our aggregate liability relating to the Site will not exceed the greater of $100 or the amount you paid us to use the Site during the preceding twelve months. This limitation does not apply where prohibited by law.'],
+      ['Changes and availability', 'We may update, suspend, or discontinue the Site or these Terms as the concept evolves. Updated Terms apply when posted, subject to applicable law. Material changes will be identified by a revised effective date.'],
+      ['Applicable law', 'These Terms are governed by applicable United States law, without limiting consumer protections that cannot lawfully be waived. Before commercial launch, this section should be updated with the final operating entity, state law, venue, and any required dispute-resolution terms following legal review.'],
+      ['Contact', 'Questions about these Terms may be sent to bharath.alluri@outlook.com.'],
+    ],
+  },
+} as const
+
+function LegalPage({ type, theme, toggleTheme }: { type: keyof typeof legalContent; theme: Theme; toggleTheme: () => void }) {
+  const page = legalContent[type]
+  return <><header className="legal-header"><a className="wordmark" href="/"><span className="wave"><i/><i/><i/></span>kinpulse</a><div className="header-tools"><a className="legal-back" href="/">← Back to home</a><button className="round" onClick={toggleTheme} aria-label={`Switch to ${theme === 'dark' ? 'light' : 'dark'} theme`}><Icon name={theme === 'dark' ? 'sun' : 'moon'}/></button></div></header><main className="legal-page"><div className="legal-title"><p className="overline">{page.label}</p><h1>{page.title}</h1><p>{page.updated}</p></div><div className="legal-intro">{page.intro}</div><div className="legal-sections">{page.sections.map(([heading, body], index) => <section key={heading}><span>{String(index + 1).padStart(2, '0')}</span><div><h2>{heading}</h2><p>{body}</p></div></section>)}</div><div className="legal-note"><strong>Legal-review note</strong><p>This is a good-faith startup draft based on the current concept website. It should be reviewed by qualified counsel before a public pilot or commercial launch.</p></div></main><footer className="legal-footer"><p>© {new Date().getFullYear()} Kinpulse · Concept product</p><div><a href="/privacy">Privacy</a><a href="/terms">Terms</a><a href="mailto:bharath.alluri@outlook.com">Contact</a></div></footer></>
+}
+
 function App() {
   const [theme, setTheme] = useState<Theme>(() => (localStorage.getItem('kinpulse-theme') as Theme) || (matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light'))
   const [menuOpen, setMenuOpen] = useState(false)
@@ -69,6 +114,9 @@ function App() {
       form.reset(); setFormStatus('sent')
     } catch { setFormStatus('error') }
   }
+
+  const legalType = location.pathname === '/privacy' ? 'privacy' : location.pathname === '/terms' ? 'terms' : null
+  if (legalType) return <LegalPage type={legalType} theme={theme} toggleTheme={() => setTheme(theme === 'dark' ? 'light' : 'dark')}/>
 
   return <>
     <a className="skip" href="#main">Skip to content</a>
@@ -152,7 +200,7 @@ function App() {
       </div>
     </div>}
 
-    <footer><div><a className="wordmark" href="#top"><span className="wave"><i/><i/><i/></span>kinpulse</a><p>Connection without surveillance.</p></div><div><a href="#principles">Privacy principles</a><a href="mailto:hello@kinpulse.com">Contact</a><a href="#pilot">Pilot</a></div><p>© {new Date().getFullYear()} Kinpulse · Concept product · Not an emergency or medical service</p></footer>
+    <footer><div><a className="wordmark" href="#top"><span className="wave"><i/><i/><i/></span>kinpulse</a><p>Connection without surveillance.</p></div><div><a href="/privacy">Privacy</a><a href="/terms">Terms</a><a href="mailto:bharath.alluri@outlook.com">Contact</a><a href="#pilot">Pilot</a></div><p>© {new Date().getFullYear()} Kinpulse · Concept product · Not an emergency or medical service</p></footer>
   </>
 }
 
