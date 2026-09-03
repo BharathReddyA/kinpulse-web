@@ -27,8 +27,24 @@ const contentPages = {
       ['Get in touch', 'Questions, feedback, or interest in the founding pilot are all welcome at bharath.alluri@outlook.com.'],
     ],
     team: [
-      { name: 'Bharath Alluri', role: 'Founder · Developer · Engineer', photo: '/images/team-bharath.jpg', link: 'https://bharathalluri.vercel.app/' },
-      { name: 'Sruthi Krapa', role: 'Co-founder · Product & Systems Engineer', photo: '/images/team-sruthi.jpg', link: null },
+      {
+        name: 'Bharath Alluri', role: 'Founder · Developer · Engineer',
+        photo: '/images/team-bharath.jpg', fullPhoto: '/images/team-bharath-full.jpg',
+        link: 'https://bharathalluri.vercel.app/',
+        bio: [
+          'Building Kithline end to end: the check-in, the family dashboard, and everything behind it.',
+          'Started this after noticing how easily "I should call" turns into weeks of silence, and wanting a gentler way to know things are okay.',
+        ],
+      },
+      {
+        name: 'Sruthi Krapa', role: 'Co-founder · Product & Systems Engineer',
+        photo: '/images/team-sruthi.jpg', fullPhoto: '/images/team-sruthi-full.jpg',
+        link: null,
+        bio: [
+          'Co-founder shaping how Kithline actually works day to day for the families using it.',
+          'Believes technology should support independence, not replace real contact, which is the line Kithline tries to walk.',
+        ],
+      },
     ],
   },
   privacy: {
@@ -73,7 +89,27 @@ const contentPages = {
 function ContentPage({ type, theme, toggleTheme }: { type: keyof typeof contentPages; theme: Theme; toggleTheme: () => void }) {
   const page = contentPages[type]
   const [legalMenuOpen, setLegalMenuOpen] = useState(false)
-  return <><header className="legal-header"><a className="wordmark" href="/"><img src="/images/kithline-mark.png" alt="" width="28" height="28"/>kithline</a><nav className={`legal-nav ${legalMenuOpen ? 'open' : ''}`} aria-label="Legal navigation"><a href="/">Home</a><a href="/about">About</a><a href="/privacy">Privacy</a><a href="/terms">Terms</a><a href="mailto:bharath.alluri@outlook.com">Contact</a></nav><div className="header-tools"><a className="legal-back" href="/">← Back to home</a><button className="round" onClick={toggleTheme} aria-label={`Switch to ${theme === 'dark' ? 'light' : 'dark'} theme`}><Icon name={theme === 'dark' ? 'sun' : 'moon'}/></button><button className="round menu" onClick={() => setLegalMenuOpen(!legalMenuOpen)} aria-expanded={legalMenuOpen} aria-label={legalMenuOpen ? 'Close menu' : 'Open menu'}><Icon name={legalMenuOpen ? 'close' : 'menu'}/></button></div></header><main className="legal-page"><div className="legal-title"><p className="overline">{page.label}</p><h1>{page.title}</h1><p>{page.updated}</p></div><div className="legal-intro">{page.intro}</div><div className="legal-sections">{page.sections.map(([heading, body], index) => <section key={heading}><span>{String(index + 1).padStart(2, '0')}</span><div><h2>{heading}</h2><p>{body}</p></div></section>)}</div>{type === 'about' && <div className="team-block"><p className="overline">CARING TEAM BEHIND THE PRODUCT</p><div className="team-grid">{contentPages.about.team.map((member) => { const Photo = () => <img src={member.photo} alt={member.name} width="120" height="120"/>; return <div className="team-card" key={member.name}>{member.link ? <a href={member.link} target="_blank" rel="noopener noreferrer" aria-label={`${member.name}'s website`}><Photo/></a> : <Photo/>}<h3>{member.name}</h3><p>{member.role}</p></div> })}</div></div>}{type !== 'about' && <div className="legal-note"><strong>Legal-review note</strong><p>This is a good-faith startup draft based on the current concept website. It should be reviewed by qualified counsel before a public pilot or commercial launch.</p></div>}</main><footer className="legal-footer"><p>© {new Date().getFullYear()} Kithline · Concept product</p><div><a href="/about">About</a><a href="/privacy">Privacy</a><a href="/terms">Terms</a><a href="mailto:bharath.alluri@outlook.com">Contact</a></div></footer></>
+  const [openMember, setOpenMember] = useState<string | null>(null)
+  useEffect(() => {
+    if (!openMember) return
+    const previousOverflow = document.body.style.overflow
+    document.body.style.overflow = 'hidden'
+    const closeOnEscape = (event: KeyboardEvent) => { if (event.key === 'Escape') setOpenMember(null) }
+    document.addEventListener('keydown', closeOnEscape)
+    return () => { document.body.style.overflow = previousOverflow; document.removeEventListener('keydown', closeOnEscape) }
+  }, [openMember])
+  const openMemberData = type === 'about' ? contentPages.about.team.find((member) => member.name === openMember) : undefined
+  return <><header className="legal-header"><a className="wordmark" href="/"><img src="/images/kithline-mark.png" alt="" width="28" height="28"/>kithline</a><nav className={`legal-nav ${legalMenuOpen ? 'open' : ''}`} aria-label="Legal navigation"><a href="/">Home</a><a href="/about">About</a><a href="/privacy">Privacy</a><a href="/terms">Terms</a><a href="mailto:bharath.alluri@outlook.com">Contact</a></nav><div className="header-tools"><a className="legal-back" href="/">← Back to home</a><button className="round" onClick={toggleTheme} aria-label={`Switch to ${theme === 'dark' ? 'light' : 'dark'} theme`}><Icon name={theme === 'dark' ? 'sun' : 'moon'}/></button><button className="round menu" onClick={() => setLegalMenuOpen(!legalMenuOpen)} aria-expanded={legalMenuOpen} aria-label={legalMenuOpen ? 'Close menu' : 'Open menu'}><Icon name={legalMenuOpen ? 'close' : 'menu'}/></button></div></header><main className="legal-page"><div className="legal-title"><p className="overline">{page.label}</p><h1>{page.title}</h1><p>{page.updated}</p></div><div className="legal-intro">{page.intro}</div><div className="legal-sections">{page.sections.map(([heading, body], index) => <section key={heading}><span>{String(index + 1).padStart(2, '0')}</span><div><h2>{heading}</h2><p>{body}</p></div></section>)}</div>{type === 'about' && <div className="team-block"><p className="overline">CARING TEAM BEHIND THE PRODUCT</p><div className="team-grid">{contentPages.about.team.map((member) => <div className="team-card" key={member.name} role="button" tabIndex={0} aria-haspopup="dialog" aria-label={`About ${member.name}`} onMouseEnter={() => setOpenMember(member.name)} onClick={() => setOpenMember(member.name)} onKeyDown={(event) => { if (event.key === 'Enter' || event.key === ' ') { event.preventDefault(); setOpenMember(member.name) } }}><img src={member.photo} alt={member.name} width="120" height="120"/><h3>{member.name}</h3><p>{member.role}</p></div>)}</div></div>}
+      {openMemberData && <div className="modal-backdrop" onMouseDown={(event) => { if (event.target === event.currentTarget) setOpenMember(null) }}>
+        <div className="modal team-modal" role="dialog" aria-modal="true" aria-label={openMemberData.name}>
+          <button className="modal-close" onClick={() => setOpenMember(null)} aria-label="Close"><Icon name="close"/></button>
+          <img className="team-modal-photo" src={openMemberData.fullPhoto} alt={openMemberData.name}/>
+          <h2>{openMemberData.name}</h2>
+          <p className="overline">{openMemberData.role}</p>
+          <ul className="team-modal-bio">{openMemberData.bio.map((point) => <li key={point}>{point}</li>)}</ul>
+          {openMemberData.link && <a className="team-modal-link" href={openMemberData.link} target="_blank" rel="noopener noreferrer">Visit my website <Icon name="arrow"/></a>}
+        </div>
+      </div>}{type !== 'about' && <div className="legal-note"><strong>Legal-review note</strong><p>This is a good-faith startup draft based on the current concept website. It should be reviewed by qualified counsel before a public pilot or commercial launch.</p></div>}</main><footer className="legal-footer"><p>© {new Date().getFullYear()} Kithline · Concept product</p><div><a href="/about">About</a><a href="/privacy">Privacy</a><a href="/terms">Terms</a><a href="mailto:bharath.alluri@outlook.com">Contact</a></div></footer></>
 }
 
 function App() {
