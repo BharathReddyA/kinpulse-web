@@ -28,7 +28,7 @@ const contentPages = {
     ],
     team: [
       { name: 'Bharath Alluri', role: 'Founder · Developer · Engineer', photo: '/images/team-bharath.jpg', link: 'https://bharathalluri.vercel.app/' },
-      { name: 'Sruthi Krapa', role: 'Co-founder', photo: '/images/team-sruthi-placeholder.png', link: null },
+      { name: 'Sruthi Krapa', role: 'Co-founder', photo: '/images/team-sruthi.jpg', link: null },
     ],
   },
   privacy: {
