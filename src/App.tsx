@@ -15,7 +15,18 @@ const Icon = ({ name }: { name: 'sun' | 'moon' | 'menu' | 'close' | 'arrow' | 'c
   return <svg aria-hidden="true" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round">{paths[name]}</svg>
 }
 
-const legalContent = {
+const contentPages = {
+  about: {
+    label: 'ABOUT', title: 'A small daily signal, built carefully.', updated: 'An early-stage concept, built in the open.',
+    intro: 'Kithline is a voice check-in for families living apart from an aging parent. One short daily conversation, a plain summary for the family, and nothing that looks or feels like surveillance.',
+    sections: [
+      ['What Kithline is', 'A small device starts one gentle conversation each day with your parent, listens for what matters (medication, mood, anything they want the family to know), and turns it into a short, plain-language summary. No camera. No wearable. No app your parent has to learn.'],
+      ['Why we started', 'The call you meant to make shouldn’t become a source of guilt. Families are busy, parents value their independence, and both can be true without anyone left guessing. Kithline began with a narrow idea: a small daily ritual that serves the parent first, and gives the family just enough context to show up at the right moment.'],
+      ['How it is different', 'A signal is not a diagnosis. We describe what was reported and what changed, nothing more, and we never present a reported answer as verified medical fact. A parent can decline any check-in with a single physical button, no explanation required, and that decline is treated as a normal answer rather than an alarm.'],
+      ['Where things stand today', 'Kithline is currently a product concept in active development, not a finished, commercially available product. Images, features, and timelines on this site are illustrative and may change. We are preparing a small founding pilot with a handful of households to learn what feels useful, what feels intrusive, and what needs to change before this becomes a real product.'],
+      ['Get in touch', 'Questions, feedback, or interest in the founding pilot are all welcome at bharath.alluri@outlook.com.'],
+    ],
+  },
   privacy: {
     label: 'PRIVACY POLICY', title: 'Your family’s information deserves plain language.', updated: 'Effective August 5, 2026',
     intro: 'This Privacy Policy explains how the Kithline concept website (the “Site,” “we,” “us,” or “our”) handles information. Kithline is an early-stage concept and founding pilot, not a medical, emergency, or healthcare-provider service.',
@@ -55,10 +66,10 @@ const legalContent = {
   },
 } as const
 
-function LegalPage({ type, theme, toggleTheme }: { type: keyof typeof legalContent; theme: Theme; toggleTheme: () => void }) {
-  const page = legalContent[type]
+function ContentPage({ type, theme, toggleTheme }: { type: keyof typeof contentPages; theme: Theme; toggleTheme: () => void }) {
+  const page = contentPages[type]
   const [legalMenuOpen, setLegalMenuOpen] = useState(false)
-  return <><header className="legal-header"><a className="wordmark" href="/"><span className="wave"><i/><i/><i/></span>kithline</a><nav className={`legal-nav ${legalMenuOpen ? 'open' : ''}`} aria-label="Legal navigation"><a href="/">Home</a><a href="/privacy">Privacy</a><a href="/terms">Terms</a><a href="mailto:bharath.alluri@outlook.com">Contact</a></nav><div className="header-tools"><a className="legal-back" href="/">← Back to home</a><button className="round" onClick={toggleTheme} aria-label={`Switch to ${theme === 'dark' ? 'light' : 'dark'} theme`}><Icon name={theme === 'dark' ? 'sun' : 'moon'}/></button><button className="round menu" onClick={() => setLegalMenuOpen(!legalMenuOpen)} aria-expanded={legalMenuOpen} aria-label={legalMenuOpen ? 'Close menu' : 'Open menu'}><Icon name={legalMenuOpen ? 'close' : 'menu'}/></button></div></header><main className="legal-page"><div className="legal-title"><p className="overline">{page.label}</p><h1>{page.title}</h1><p>{page.updated}</p></div><div className="legal-intro">{page.intro}</div><div className="legal-sections">{page.sections.map(([heading, body], index) => <section key={heading}><span>{String(index + 1).padStart(2, '0')}</span><div><h2>{heading}</h2><p>{body}</p></div></section>)}</div><div className="legal-note"><strong>Legal-review note</strong><p>This is a good-faith startup draft based on the current concept website. It should be reviewed by qualified counsel before a public pilot or commercial launch.</p></div></main><footer className="legal-footer"><p>© {new Date().getFullYear()} Kithline · Concept product</p><div><a href="/privacy">Privacy</a><a href="/terms">Terms</a><a href="mailto:bharath.alluri@outlook.com">Contact</a></div></footer></>
+  return <><header className="legal-header"><a className="wordmark" href="/"><img src="/images/kithline-mark.png" alt="" width="28" height="28"/>kithline</a><nav className={`legal-nav ${legalMenuOpen ? 'open' : ''}`} aria-label="Legal navigation"><a href="/">Home</a><a href="/about">About</a><a href="/privacy">Privacy</a><a href="/terms">Terms</a><a href="mailto:bharath.alluri@outlook.com">Contact</a></nav><div className="header-tools"><a className="legal-back" href="/">← Back to home</a><button className="round" onClick={toggleTheme} aria-label={`Switch to ${theme === 'dark' ? 'light' : 'dark'} theme`}><Icon name={theme === 'dark' ? 'sun' : 'moon'}/></button><button className="round menu" onClick={() => setLegalMenuOpen(!legalMenuOpen)} aria-expanded={legalMenuOpen} aria-label={legalMenuOpen ? 'Close menu' : 'Open menu'}><Icon name={legalMenuOpen ? 'close' : 'menu'}/></button></div></header><main className="legal-page"><div className="legal-title"><p className="overline">{page.label}</p><h1>{page.title}</h1><p>{page.updated}</p></div><div className="legal-intro">{page.intro}</div><div className="legal-sections">{page.sections.map(([heading, body], index) => <section key={heading}><span>{String(index + 1).padStart(2, '0')}</span><div><h2>{heading}</h2><p>{body}</p></div></section>)}</div>{type !== 'about' && <div className="legal-note"><strong>Legal-review note</strong><p>This is a good-faith startup draft based on the current concept website. It should be reviewed by qualified counsel before a public pilot or commercial launch.</p></div>}</main><footer className="legal-footer"><p>© {new Date().getFullYear()} Kithline · Concept product</p><div><a href="/about">About</a><a href="/privacy">Privacy</a><a href="/terms">Terms</a><a href="mailto:bharath.alluri@outlook.com">Contact</a></div></footer></>
 }
 
 function App() {
@@ -71,8 +82,12 @@ function App() {
   useEffect(() => {
     const pages: Record<string, { title: string; description: string }> = {
       '/': {
-        title: 'Kithline — A gentle daily signal from home',
-        description: 'Kithline is a gentle voice check-in that helps families stay close to aging parents—without cameras, wearables, or complicated apps.',
+        title: 'Kithline: A gentle daily signal from home',
+        description: 'Kithline is a gentle voice check-in that helps families stay close to aging parents, without cameras, wearables, or complicated apps.',
+      },
+      '/about': {
+        title: 'About | Kithline',
+        description: 'Kithline is a voice check-in for families living apart from an aging parent, built as an early-stage concept and founding pilot.',
       },
       '/privacy': {
         title: 'Privacy Policy | Kithline',
@@ -144,15 +159,15 @@ function App() {
     } catch { setFormStatus('error') }
   }
 
-  const legalType = location.pathname === '/privacy' ? 'privacy' : location.pathname === '/terms' ? 'terms' : null
-  if (legalType) return <LegalPage type={legalType} theme={theme} toggleTheme={() => setTheme(theme === 'dark' ? 'light' : 'dark')}/>
+  const pageType = location.pathname === '/about' ? 'about' : location.pathname === '/privacy' ? 'privacy' : location.pathname === '/terms' ? 'terms' : null
+  if (pageType) return <ContentPage type={pageType} theme={theme} toggleTheme={() => setTheme(theme === 'dark' ? 'light' : 'dark')}/>
 
   return <>
     <a className="skip" href="#main">Skip to content</a>
     <header>
-      <a className="wordmark" href="#top" aria-label="Kithline home"><span className="wave"><i/><i/><i/></span>kithline</a>
+      <a className="wordmark" href="#top" aria-label="Kithline home"><img src="/images/kithline-mark.png" alt="" width="28" height="28"/>kithline</a>
       <nav className={menuOpen ? 'open' : ''} aria-label="Primary navigation">
-        <a href="#morning">One morning</a><a href="#device">The device</a><a href="#principles">Our principles</a><a href="#pilot">The pilot</a>
+        <a href="#morning">One morning</a><a href="#device">The device</a><a href="#principles">Our principles</a><a href="#pilot">The pilot</a><a href="/about">About</a>
       </nav>
         <div className="header-tools">
         <button className="round" onClick={() => setTheme(theme === 'dark' ? 'light' : 'dark')} aria-label={`Switch to ${theme === 'dark' ? 'light' : 'dark'} theme`}><Icon name={theme === 'dark' ? 'sun' : 'moon'}/></button>
@@ -172,7 +187,7 @@ function App() {
       <section className="intro"><p>Made for the ordinary space between<br/><strong>“I should call”</strong> and <strong>“Is everything okay?”</strong></p><span>Kithline is not a replacement for family contact. It helps you know when a real conversation may matter.</span></section>
 
       <section className="morning section" id="morning">
-        <div className="section-lead"><span>01 — ONE MORNING</span><h2>It starts like<br/>a familiar conversation.</h2><p>No commands to memorize. No screen to navigate. Just a few questions at a time your parent chooses.</p></div>
+        <div className="section-lead"><span>01 · ONE MORNING</span><h2>It starts like<br/>a familiar conversation.</h2><p>No commands to memorize. No screen to navigate. Just a few questions at a time your parent chooses.</p></div>
         <div className="conversation">
           <div className="time"><span>9:08</span><i/></div>
           <div className="speech device-speech"><small>KITHLINE</small><p>Good morning, Maria.<br/>How are you feeling today?</p></div>
@@ -186,15 +201,15 @@ function App() {
         <div className="phone" aria-label="Example family check-in summary">
           <div className="phone-bar"><span>9:12</span><span>● ● ●</span></div><p className="app-name">KITHLINE</p><p className="today">Today</p>
           <div className="person"><span>M</span><div><h3>Mom checked in</h3><p>9:08 AM · 4 minutes</p></div></div>
-          <div className="result"><p><span><Icon name="check"/></span>Medication <strong>Reported taken</strong></p><p><span>☺</span>Mood <strong>Positive</strong></p><p><span>—</span>Concerns <strong>None mentioned</strong></p></div>
+          <div className="result"><p><span><Icon name="check"/></span>Medication <strong>Reported taken</strong></p><p><span>☺</span>Mood <strong>Positive</strong></p><p><span>·</span>Concerns <strong>None mentioned</strong></p></div>
           <div className="phone-note"><small>A GENTLE NUDGE</small><p>Things feel normal today. It has been four days since your last call.</p><button>Call Mom</button></div>
         </div>
-        <div className="signal-copy"><span>02 — WHAT THE FAMILY SEES</span><h2>You don’t need<br/>every detail.</h2><p>You want to know whether today feels normal. Kithline shares a concise summary—not a private transcript—and never presents a reported answer as verified medical fact.</p><blockquote>“One quiet day may mean nothing. Three different days in a row may be worth a call.”</blockquote></div>
+        <div className="signal-copy"><span>02 · WHAT THE FAMILY SEES</span><h2>You don’t need<br/>every detail.</h2><p>You want to know whether today feels normal. Kithline shares a concise summary, not a private transcript, and never presents a reported answer as verified medical fact.</p><blockquote>“One quiet day may mean nothing. Three different days in a row may be worth a call.”</blockquote></div>
       </section>
 
       <section className="device-story" id="device">
         <div className="device-image"><img src="/images/kithline-morning-hero.webp" width="1536" height="1024" loading="lazy" alt="Close view of the Kithline device, showing its visible status light and tactile button"/></div>
-        <div className="device-copy"><span>03 — DESIGNED TO BE UNDERSTOOD</span><h2>No hidden state.<br/>No mystery listening.</h2><p>The product should explain itself from across the room. A light shows when audio is active. One physical button gives the parent a clear choice.</p>
+        <div className="device-copy"><span>03 · DESIGNED TO BE UNDERSTOOD</span><h2>No hidden state.<br/>No mystery listening.</h2><p>The product should explain itself from across the room. A light shows when audio is active. One physical button gives the parent a clear choice.</p>
           <div className="detail"><Icon name="mic"/><div><h3>The microphone is never hidden</h3><p>Its status is visible. Audio leaves the device only during an active check-in.</p></div></div>
           <div className="detail"><Icon name="button"/><div><h3>“Not today” is a real answer</h3><p>Pressing the amber button declines a check-in without creating a false emergency.</p></div></div>
           <div className="detail"><Icon name="lock"/><div><h3>Less information, held carefully</h3><p>Families receive useful signals. Raw conversations are not kept as a family archive.</p></div></div>
@@ -204,11 +219,11 @@ function App() {
       <section className="principles section" id="principles"><p className="overline">THE PRODUCT PROMISE</p><h2>Four decisions we won’t quietly undo.</h2><div className="rules">
         <article><b>01</b><h3>There will never be a camera.</h3><p>Not as an add-on. Not as a premium feature.</p></article>
         <article><b>02</b><h3>Consent continues after setup.</h3><p>A parent can pause, decline, or stop using Kithline.</p></article>
-        <article><b>03</b><h3>A signal is not a diagnosis.</h3><p>We describe what was reported and what changed—nothing more.</p></article>
+        <article><b>03</b><h3>A signal is not a diagnosis.</h3><p>We describe what was reported and what changed. Nothing more.</p></article>
         <article><b>04</b><h3>Kithline will not pretend to be emergency care.</h3><p>It supports family awareness. It cannot guarantee someone is safe.</p></article>
-      </div><div className="privacy-line"><Icon name="lock"/><p><strong>Designed around sensitive-data safeguards.</strong> Encryption, limited access, data minimization, deletion controls, and documented consent are part of the product—not a badge added afterward. Regulatory applicability and compliance will be independently reviewed before launch.</p></div></section>
+      </div><div className="privacy-line"><Icon name="lock"/><p><strong>Designed around sensitive-data safeguards.</strong> Encryption, limited access, data minimization, deletion controls, and documented consent are part of the product, not a badge added afterward. Regulatory applicability and compliance will be independently reviewed before launch.</p></div></section>
 
-      <section className="founder section"><div><span>WHY WE’RE BUILDING THIS</span><h2>The call you meant to make shouldn’t become a source of guilt.</h2></div><div><p>Families are busy. Parents value independence. Both can be true without leaving everyone guessing.</p><p>Kithline began with a narrow idea: create a small daily ritual that serves the parent first and gives the family just enough context to show up at the right moment.</p><p className="signed">— The Kithline founding idea</p></div></section>
+      <section className="founder section"><div><span>WHY WE’RE BUILDING THIS</span><h2>The call you meant to make shouldn’t become a source of guilt.</h2></div><div><p>Families are busy. Parents value independence. Both can be true without leaving everyone guessing.</p><p>Kithline began with a narrow idea: create a small daily ritual that serves the parent first and gives the family just enough context to show up at the right moment.</p><p className="signed">The Kithline founding idea</p></div></section>
 
       <section className="pilot" id="pilot"><div className="pilot-card"><p className="overline">FOUNDING PILOT · 20 FAMILIES</p><h2>Help us test whether this deserves to exist.</h2><p>We’re preparing a small household pilot. We want families who will tell us what feels useful, what feels intrusive, and what needs to change.</p><ul><li><Icon name="check"/> One parent living independently</li><li><Icon name="check"/> One participating family circle</li><li><Icon name="check"/> Regular feedback for 8 weeks</li></ul><button className="button light" onClick={openForm}>Apply for the founding pilot <Icon name="arrow"/></button><small>No payment today. No promise of selection. We’ll contact interested families before the pilot begins.</small></div></section>
     </main>
@@ -217,7 +232,7 @@ function App() {
       <div className="modal" role="dialog" aria-modal="true" aria-labelledby="pilot-form-title" ref={dialogRef}>
         <button className="modal-close" onClick={() => setFormOpen(false)} aria-label="Close application form"><Icon name="close"/></button>
         {formStatus === 'sent' ? <div className="form-success"><span><Icon name="check"/></span><p className="overline">APPLICATION RECEIVED</p><h2>Thank you for trusting us with your story.</h2><p>Your details have been sent to the Kithline team. We’ll be in touch before pilot selection begins.</p><button className="button light" onClick={() => setFormOpen(false)}>Close</button></div> : <>
-          <p className="overline">FOUNDING PILOT · 20 FAMILIES</p><h2 id="pilot-form-title">Tell us a little about your family.</h2><p className="modal-intro">This is an expression of interest—not a medical intake or commitment to participate.</p>
+          <p className="overline">FOUNDING PILOT · 20 FAMILIES</p><h2 id="pilot-form-title">Tell us a little about your family.</h2><p className="modal-intro">This is an expression of interest, not a medical intake or commitment to participate.</p>
           <form onSubmit={submitApplication}>
             <div className="form-grid"><label>Full name<input name="name" autoComplete="name" required/></label><label>Email address<input name="email" type="email" autoComplete="email" required/></label><label>Phone <span>(optional)</span><input name="phone" type="tel" autoComplete="tel"/></label><label>Your relationship to the parent<select name="relationship" required defaultValue=""><option value="" disabled>Select one</option><option>Adult child</option><option>Spouse or partner</option><option>Sibling</option><option>Friend or other caregiver</option></select></label><label>Parent’s city or region <span>(no street address)</span><input name="parent_region" autoComplete="off" required/></label><label>Parent’s living situation<select name="living_situation" required defaultValue=""><option value="" disabled>Select one</option><option>Lives independently alone</option><option>Lives independently with someone</option><option>Independent or assisted community</option><option>Other</option></select></label></div>
             <label>What would you hope Kithline helps with?<textarea name="hopes" rows={4} required placeholder="A short, non-medical description is enough."/></label>
@@ -229,7 +244,7 @@ function App() {
       </div>
     </div>}
 
-    <footer><div><a className="wordmark" href="#top"><span className="wave"><i/><i/><i/></span>kithline</a><p>Connection without surveillance.</p></div><div><a href="/privacy">Privacy</a><a href="/terms">Terms</a><a href="mailto:bharath.alluri@outlook.com">Contact</a><a href="#pilot">Pilot</a></div><p>© {new Date().getFullYear()} Kithline · Concept product · Not an emergency or medical service</p></footer>
+    <footer><div><a className="wordmark" href="#top"><img src="/images/kithline-mark.png" alt="" width="28" height="28"/>kithline</a><p>Connection without surveillance.</p></div><div><a href="/about">About</a><a href="/privacy">Privacy</a><a href="/terms">Terms</a><a href="mailto:bharath.alluri@outlook.com">Contact</a><a href="#pilot">Pilot</a></div><p>© {new Date().getFullYear()} Kithline · Concept product · Not an emergency or medical service</p></footer>
   </>
 }
 
