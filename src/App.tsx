@@ -24,7 +24,7 @@ const contentPages = {
       ['Why we started', 'The call you meant to make shouldn’t become a source of guilt. Families are busy, parents value their independence, and both can be true without anyone left guessing. Kithline began with a narrow idea: a small daily ritual that serves the parent first, and gives the family just enough context to show up at the right moment.'],
       ['How it is different', 'A signal is not a diagnosis. We describe what was reported and what changed, nothing more, and we never present a reported answer as verified medical fact. A parent can decline any check-in with a single physical button, no explanation required, and that decline is treated as a normal answer rather than an alarm.'],
       ['Where things stand today', 'Kithline is currently a product concept in active development, not a finished, commercially available product. Images, features, and timelines on this site are illustrative and may change. We are preparing a small founding pilot with a handful of households to learn what feels useful, what feels intrusive, and what needs to change before this becomes a real product.'],
-      ['Get in touch', 'Questions, feedback, or interest in the founding pilot are all welcome at bharath.alluri@outlook.com.'],
+      ['Get in touch', 'Questions, feedback, or interest in the founding pilot are all welcome. Email: bharath.alluri@outlook.com. Email: sruthi.krapa97@gmail.com.'],
     ],
     team: [
       {
